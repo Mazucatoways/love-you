@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Namoro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://s4.aconvert.com/convert/p3r68-cdx67/av8vn-cidtj.jpg') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #fff;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        #question {
+            position: absolute;
+            text-align: center;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #question h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #btnSim, #btnNao {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            background-color: #ff6699;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #btnSim:hover, #btnNao:hover {
+            background-color: #ff3366;
+            transform: scale(1.1);
+        }
+
+        #fireworks {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #loveMessage {
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="question">
+        <h1>Quer namorar comigo?</h1>
+        <button id="btnSim">Sim</button>
+        <button id="btnNao">Não</button>
+    </div>
+
+    <div id="fireworks">
+        <div id="loveMessage">Agora estamos namorando! Eu te amo muito, amor!</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js/dist/fireworks.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnNao = document.getElementById("btnNao");
+            const btnSim = document.getElementById("btnSim");
+            const fireworks = document.getElementById("fireworks");
+            const loveMessage = document.getElementById("loveMessage");
+            const messages = [
+                "Eu acho que deveria apertar o Sim...",
+                "Vai se arrepender de apertar o não...",
+                "Aperta logo esse botão do sim!",
+                "O homem da sua vida está esperando o SIM!"
+            ];
+
+            function moveButton() {
+                const x = Math.random() * (window.innerWidth - btnNao.clientWidth);
+                const y = Math.random() * (window.innerHeight - btnNao.clientHeight);
+                btnNao.style.position = "absolute";
+                btnNao.style.left = `${x}px`;
+                btnNao.style.top = `${y}px`;
+                alert(messages[Math.floor(Math.random() * messages.length)]);
+            }
+
+            function showFireworks() {
+                fireworks.style.display = "flex";
+
+                // Initialize and start fireworks
+                const fireworksContainer = document.createElement('div');
+                fireworksContainer.style.position = 'fixed';
+                fireworksContainer.style.top = 0;
+                fireworksContainer.style.left = 0;
+                fireworksContainer.style.width = '100%';
+                fireworksContainer.style.height = '100%';
+                fireworksContainer.style.pointerEvents = 'none';
+                document.body.appendChild(fireworksContainer);
+
+                const fw = new Fireworks(fireworksContainer, {
+                    autoresize: true,
+                    opacity: 0.5,
+                    acceleration: 1.05,
+                    friction: 0.97,
+                    gravity: 1.5,
+                    particles: 50,
+                    trace: 3,
+                    explosion: 5,
+                    intensity: 30,
+                    flickering: 50,
+                    lineStyle: 'round',
+                    hue: {
+                        min: 0,
+                        max: 360
+                    },
+                    delay: {
+                        min: 15,
+                        max: 30
+                    },
+                    rocketsPoint: {
+                        min: 50,
+                        max: 50
+                    },
+                    lineWidth: {
+                        explosion: {
+                            min: 1,
+                            max: 3
+                        },
+                        trace: {
+                            min: 1,
+                            max: 2
+                        }
+                    },
+                    brightness: {
+                        min: 50,
+                        max: 80
+                    },
+                    decay: {
+                        min: 0.015,
+                        max: 0.03
+                    },
+                    mouse: {
+                        click: false,
+                        move: false,
+                        max: 1
+                    }
+                });
+
+                fw.start();
+
+                // Stop fireworks after 10 seconds
+                setTimeout(() => {
+                    fw.stop();
+                    document.body.removeChild(fireworksContainer);
+                    loveMessage.textContent = "Agora estamos namorando! Eu te amo muito, amor!";
+                }, 10000);
+            }
+
+            btnNao.addEventListener("click", moveButton);
+            btnSim.addEventListener("click", showFireworks);
+        });
+    </script>
+</body>
+</html>
